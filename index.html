@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VanCraft | Premium Indian Handmade Crafts</title>
+  <meta name="description" content="Explore and shop premium, high-quality traditional Indian handmade crafts. Discover unique pottery, custom woodwork, textiles, and fine art direct from local artisans at VanCraft.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Loading Animation Overlay -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-text">Crafting Your Experience...</div>
+  </div>
+
+  <!-- Toast Notifications Container -->
+  <div id="toast-container"></div>
+
+  <!-- Drawer & Modal Backdrop Blur -->
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+
+  <!-- Header / Navigation Bar -->
+  <header class="navbar">
+    <div class="container navbar-container">
+      <!-- Logo and Brand Name -->
+      <a href="#" class="nav-brand" id="brand-logo" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Van<span>Craft</span>
+      </a>
+
+      <!-- Desktop Navigation Menu Links -->
+      <nav class="nav-menu-wrapper">
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#" class="nav-link active">Home</a></li>
+          <li><a href="#shop" class="nav-link">Shop</a></li>
+          <li><a href="#categories-anchor" class="nav-link">Categories</a></li>
+          <li><a href="#best-sellers-anchor" class="nav-link">Best Sellers</a></li>
+          <li><a href="#about" class="nav-link">About Us</a></li>
+          <li><a href="#contact" class="nav-link">Contact Us</a></li>
+          <li><a href="#" class="nav-link" id="cart-nav-link" onclick="openCartDrawer(); return false;">Cart</a></li>
+          <!-- Mobile Theme & Cart & Auth actions inside menu -->
+          <li class="mobile-only-menu-actions" style="flex-direction: column; gap: 12px; align-items: stretch; width: 100%;">
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+              <button class="btn btn-secondary btn-auth-header" id="login-toggle-mobile" style="flex: 1;">Login</button>
+              <button class="btn btn-primary btn-auth-header btn-signup-header" id="signup-toggle-mobile" style="flex: 1;">Sign Up</button>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+              <span style="font-size: 14px; font-weight: 600; color: var(--text-secondary);">Toggle Mode:</span>
+              <button class="icon-btn theme-toggle-btn" id="theme-toggle-header" aria-label="Toggle dark/light mode">
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+              </button>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Header Interaction Icons (Desktop) -->
+      <div class="nav-actions">
+        <!-- Auth Buttons -->
+        <button class="btn btn-secondary btn-auth-header" id="login-toggle" style="padding: 8px 16px;">Login</button>
+        <button class="btn btn-primary btn-auth-header btn-signup-header" id="signup-toggle" style="padding: 8px 16px;">Sign Up</button>
+
+        <!-- Light / Dark Mode Toggle Button -->
+        <button class="icon-btn theme-toggle-btn" id="theme-toggle" aria-label="Toggle dark/light mode">
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+
+        <!-- Cart Drawer Toggle Badge Button -->
+        <button class="icon-btn" id="cart-toggle" aria-label="Open shopping cart">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <div class="cart-badge" id="cart-count">0</div>
+        </button>
+
+        <!-- Mobile Responsive Hamburger Trigger -->
+        <button class="hamburger" id="hamburger-menu" aria-label="Open mobile navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section (Animated full-width banner with auto-slider) -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1>Welcome to VanCraft – <br><mark>Handmade with Love</mark>.</h1>
+        <p>Discover timeless handmade treasures crafted by skilled Indian artisans. Bring traditional craftsmanship and warm, natural aesthetics directly into your modern home.</p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" id="hero-shop-btn">Shop Now</button>
+          <button class="btn btn-secondary" id="hero-explore-btn">Explore Collection</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-circle-accent"></div>
+        <div class="hero-carousel" id="hero-carousel">
+          <!-- Slide 1 -->
+          <div class="hero-slide active">
+            <div class="hero-image-card">
+              <img src="assets/images/hero_slide_1.png" alt="Terracotta Pottery Collection" ondragstart="return false;">
+              <div class="image-watermark-overlay">VanCraft</div>
+              <div class="hero-image-caption">
+                <div>
+                  <h3>Terracotta Clay Pot</h3>
+                  <p style="font-size: 12px; color: var(--text-muted); font-weight:500;">By Jaipur Pottery Guild</p>
+                </div>
+                <span>₹799</span>
+              </div>
+            </div>
+          </div>
+          <!-- Slide 2 -->
+          <div class="hero-slide">
+            <div class="hero-image-card">
+              <img src="assets/images/hero_slide_2.png" alt="Rajasthani Wooden Toys" ondragstart="return false;">
+              <div class="image-watermark-overlay">VanCraft</div>
+              <div class="hero-image-caption">
+                <div>
+                  <h3>Wooden Toy Horse</h3>
+                  <p style="font-size: 12px; color: var(--text-muted); font-weight:500;">By Channapatna Toys</p>
+                </div>
+                <span>₹899</span>
+              </div>
+            </div>
+          </div>
+          <!-- Slide 3 -->
+          <div class="hero-slide">
+            <div class="hero-image-card">
+              <img src="assets/images/hero_slide_3.png" alt="Traditional Paintings" ondragstart="return false;">
+              <div class="image-watermark-overlay">VanCraft</div>
+              <div class="hero-image-caption">
+                <div>
+                  <h3>Warli Traditional Painting</h3>
+                  <p style="font-size: 12px; color: var(--text-muted); font-weight:500;">By Sahyadri Tribes</p>
+                </div>
+                <span>₹4,999</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Showcase Section -->
+  <section class="categories-section container reveal-on-scroll" id="categories-anchor" style="padding: 80px 0 20px 0;">
+    <span class="section-tag">Explore Collections</span>
+    <h2>Shop by Category</h2>
+    <div class="categories-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 32px;">
+      <div class="category-card" onclick="selectCategory('Pottery')" style="cursor: pointer; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; text-align: center; transition: var(--transition); box-shadow: var(--shadow-sm); backdrop-filter: var(--glass-blur);">
+        <img src="assets/images/clay_pot.png" alt="Pottery" style="width: 100px; height: 100px; object-fit: cover; border-radius: var(--radius-round); margin: 0 auto 16px auto; border: 2px solid var(--accent-color);">
+        <h3 style="font-size: 18px; margin-bottom: 8px;">Pottery</h3>
+        <p style="font-size: 13px; color: var(--text-secondary);">Earthy clay pots, ceramic vases, & decorative bowls.</p>
+      </div>
+      <div class="category-card" onclick="selectCategory('Handmade Toys')" style="cursor: pointer; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; text-align: center; transition: var(--transition); box-shadow: var(--shadow-sm); backdrop-filter: var(--glass-blur);">
+        <img src="assets/images/wooden_horse.png" alt="Handmade Toys" style="width: 100px; height: 100px; object-fit: cover; border-radius: var(--radius-round); margin: 0 auto 16px auto; border: 2px solid var(--accent-color);">
+        <h3 style="font-size: 18px; margin-bottom: 8px;">Handmade Toys</h3>
+        <p style="font-size: 13px; color: var(--text-secondary);">Rajasthani wooden horses, puppet dolls & soft fabric toys.</p>
+      </div>
+      <div class="category-card" onclick="selectCategory('Home Decor')" style="cursor: pointer; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; text-align: center; transition: var(--transition); box-shadow: var(--shadow-sm); backdrop-filter: var(--glass-blur);">
+        <img src="assets/images/wall_hanging.png" alt="Home Decor" style="width: 100px; height: 100px; object-fit: cover; border-radius: var(--radius-round); margin: 0 auto 16px auto; border: 2px solid var(--accent-color);">
+        <h3 style="font-size: 18px; margin-bottom: 8px;">Home Decor</h3>
+        <p style="font-size: 13px; color: var(--text-secondary);">Exquisite mirror wall hangings, brass lamps & showpieces.</p>
+      </div>
+      <div class="category-card" onclick="selectCategory('Paintings')" style="cursor: pointer; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; text-align: center; transition: var(--transition); box-shadow: var(--shadow-sm); backdrop-filter: var(--glass-blur);">
+        <img src="assets/images/nature_painting.png" alt="Paintings" style="width: 100px; height: 100px; object-fit: cover; border-radius: var(--radius-round); margin: 0 auto 16px auto; border: 2px solid var(--accent-color);">
+        <h3 style="font-size: 18px; margin-bottom: 8px;">Paintings & Art</h3>
+        <p style="font-size: 13px; color: var(--text-secondary);">Madhubani nature paintings, tribal Warli art, & canvas art.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Best Sellers Anchor Div (used for scrolling) -->
+  <div id="best-sellers-anchor" style="height:10px;"></div>
+
+  <!-- Storefront Main View -->
+  <main class="container" id="shop">
+    <!-- Mobile Filter & Search Toggle Bar -->
+    <div class="mobile-filter-bar">
+      <button class="mobile-filter-btn" id="mobile-filter-open">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+        Filter & Sort Catalog
+      </button>
+      <div id="mobile-item-count" style="font-size: 14px; font-weight: 700; color: var(--text-secondary);">8 products</div>
+    </div>
+
+    <!-- Toggle sidebar button for desktop catalog space -->
+    <div class="desktop-sidebar-control-row" style="margin-top:40px; display:flex; justify-content:space-between; align-items:center;">
+      <button class="btn btn-secondary" id="sidebar-toggle" style="gap:8px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        Toggle Filters Sidebar
+      </button>
+
+      <!-- Live Search Bar input -->
+      <div class="search-bar-container" style="flex:0 1 400px; position:relative;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute; left:16px; top:50%; transform:translateY(-50%); width:18px; height:18px; color:var(--text-muted); pointer-events:none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" placeholder="Search by name, category, keyword..." class="form-input" id="search-bar" style="padding-left:48px; border-radius:var(--radius-md); border: 1px solid var(--border-color); padding-top: 10px; padding-bottom: 10px;">
+      </div>
+    </div>
+
+    <div class="shop-section">
+      <!-- Collapsible Sidebar Filters -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h2 class="sidebar-title">Filters</h2>
+          <button class="close-sidebar-btn" id="sidebar-close" aria-label="Close sidebar filters">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+
+        <!-- Categories List Selection (Interactive Highlights) -->
+        <div class="filter-group">
+          <h3 class="filter-group-title">Collections</h3>
+          <ul class="category-list" id="sidebar-category-list">
+            <li class="category-item active" data-category="all" style="cursor:pointer; margin-bottom:10px; transition: var(--transition-fast);">
+              <span class="category-label">All Crafts</span>
+            </li>
+            <li class="category-item" data-category="Pottery" style="cursor:pointer; margin-bottom:10px; transition: var(--transition-fast);">
+              <span class="category-label">Pottery</span>
+            </li>
+            <li class="category-item" data-category="Handmade Toys" style="cursor:pointer; margin-bottom:10px; transition: var(--transition-fast);">
+              <span class="category-label">Handmade Toys</span>
+            </li>
+            <li class="category-item" data-category="Home Decor" style="cursor:pointer; margin-bottom:10px; transition: var(--transition-fast);">
+              <span class="category-label">Home Decor</span>
+            </li>
+            <li class="category-item" data-category="Paintings" style="cursor:pointer; margin-bottom:10px; transition: var(--transition-fast);">
+              <span class="category-label">Paintings</span>
+            </li>
+            <li class="category-item" data-category="Traditional Art" style="cursor:pointer; margin-bottom:10px; transition: var(--transition-fast);">
+              <span class="category-label">Traditional Art</span>
+            </li>
+            <li class="category-item" data-category="Best Sellers" style="cursor:pointer; margin-bottom:10px; transition: var(--transition-fast);">
+              <span class="category-label">Best Sellers</span>
+            </li>
+            <li class="category-item" data-category="Trending Products" style="cursor:pointer; margin-bottom:10px; transition: var(--transition-fast);">
+              <span class="category-label">Trending Products</span>
+            </li>
+            <li class="category-item" data-category="Discount Items" style="cursor:pointer; margin-bottom:10px; transition: var(--transition-fast);">
+              <span class="category-label">Discount Items</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Price Range Slider -->
+        <div class="filter-group">
+          <h3 class="filter-group-title">Max Price</h3>
+          <div class="price-range-container">
+            <input type="range" class="price-slider" id="price-slider" min="300" max="6000" step="100" value="6000">
+            <div class="price-values">
+              <span>₹300</span>
+              <span id="price-slider-value" style="color: var(--accent-color); font-weight: bold;">₹6,000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reset Button -->
+        <button class="btn btn-secondary" id="clear-filters" style="width: 100%; justify-content:center; margin-top:16px;">Reset Filters</button>
+      </aside>
+
+      <!-- Main Catalog Display -->
+      <section class="catalog-container" id="featured">
+        <div class="catalog-header">
+          <div class="catalog-count" id="catalog-count">Showing 8 products</div>
+          <!-- Sort Selector -->
+          <div class="sort-container">
+            <span class="sort-label">Sort by:</span>
+            <select class="sort-select" id="sort-select">
+              <option value="featured">Featured</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="best-selling">Best Selling</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dynamic Product Catalog Cards Grid -->
+        <div class="product-grid" id="product-grid">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- About Us Section -->
+  <section class="about-section reveal-on-scroll" id="about">
+    <div class="container about-grid">
+      <div class="about-visual">
+        <img src="assets/images/cotton_throw.png" alt="Woven Blanket Threads close up" ondragstart="return false;">
+        <div class="image-watermark-overlay">Amara Okoye</div>
+      </div>
+      <div class="about-content">
+        <span class="section-tag">Our Legacy</span>
+        <h2>Honoring Heritage, <br>Knitting Community</h2>
+        <p>Handmade Crafts Store is a curated marketplace born from a deep respect for historical workmanship. We partner directly with independent global artisans, providing ethical compensation and supporting family workshops that have passed down their lineages for centuries.</p>
+        <p>Every purchase directly assists artisan cooperatives in rural communities, preserving unique artistic heritage and promoting organic, zero-waste manufacturing traditions using indigenous clay, wood, and organic threads.</p>
+        
+        <!-- Statistics counters animated on scroll view -->
+        <div class="stats-container" id="about-stats">
+          <div class="stat-card">
+            <div class="stat-number" data-target="15000">0+</div>
+            <div class="stat-label">Happy Customers</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="45000">0+</div>
+            <div class="stat-label">Products Sold</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="12000">0+</div>
+            <div class="stat-label">Premium Reviews</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Carousel Section -->
+  <section class="testimonials-section reveal-on-scroll" id="testimonials">
+    <div class="container">
+      <span class="section-tag">Reviews</span>
+      <h2>What Our Collectors Say</h2>
+      
+      <div class="carousel-wrapper">
+        <button class="carousel-control prev" aria-label="Previous Slide">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="carousel-control next" aria-label="Next Slide">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        
+        <div class="testimonials-slider">
+          <!-- Slide 1 -->
+          <div class="testimonial-slide active">
+            <p class="testimonial-quote">"The terracotta vase is absolutely breathtaking. You can feel the tactile grain of Georgia's earth and the kiln's heat in its organic silhouette. It holds a permanent place in my studio."</p>
+            <div class="testimonial-author">
+              <img src="assets/images/terracotta_vase.png" alt="Iris Sterling profile image" class="author-img" ondragstart="return false;">
+              <div class="author-info">
+                <div class="author-name">Iris Sterling</div>
+                <div class="author-role">Interior Designer, London</div>
+              </div>
+            </div>
+          </div>
+          <!-- Slide 2 -->
+          <div class="testimonial-slide">
+            <p class="testimonial-quote">"I ordered the waffle throw blanket and the cedar keepsake box. The scent of the red cedar is hypnotic, and the craftsmanship of the dovetail box joints is flawless. A rare treasure."</p>
+            <div class="testimonial-author">
+              <img src="assets/images/jewelry_box.png" alt="Devon Blackwood profile image" class="author-img" ondragstart="return false;">
+              <div class="author-info">
+                <div class="author-name">Devon Blackwood</div>
+                <div class="author-role">Architect, Copenhagen</div>
+              </div>
+            </div>
+          </div>
+          <!-- Slide 3 -->
+          <div class="testimonial-slide">
+            <p class="testimonial-quote">"Sienna's amber ring is a masterpiece. The silver has this beautiful weight to it and the amber glow shifts so warmly in direct morning light. Exquisite packaging too."</p>
+            <div class="testimonial-author">
+              <img src="assets/images/silver_ring.png" alt="Aria Sterling profile image" class="author-img" ondragstart="return false;">
+              <div class="author-info">
+                <div class="author-name">Aria Montgomery</div>
+                <div class="author-role">Artist, Toronto</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="carousel-dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion Section -->
+  <section class="faq-section reveal-on-scroll" id="faq">
+    <div class="container">
+      <span class="section-tag">FAQ</span>
+      <h2>Frequently Asked Questions</h2>
+      
+      <div class="faq-container">
+        <!-- FAQ 1 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Are all products genuinely handmade?</h3>
+            <span class="faq-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Yes, 100%. Every single item listed on our store is completely designed, hand-thrown, hand-forged, or hand-woven by independent master artisans. No automated assembly lines or high-volume industrial machines are ever used.
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 2 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>How do you support and source your artisans?</h3>
+            <span class="faq-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              We source directly by visiting regional craft collectives and home workshops. We practice fair trade policies by guaranteeing our partners set their own pricing, paying ethical wages upfront, and investing a portion of store profits into local workshop expansions.
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 3 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Do you ship worldwide and package sustainably?</h3>
+            <span class="faq-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Yes, we ship globally! To protect fragile ceramics and items, we utilize eco-friendly, biodegradable honeycombed paper wrapping, compostable organic cornstarch peanuts, and recycled double-walled cardboard boxes.
+            </div>
+          </div>
+        </div>
+        <!-- FAQ 4 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Can I request customized dimensions or engravings?</h3>
+            <span class="faq-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Absolutely! Items marked as "Customizable" (like our Engraved Leather Wallet) can be directly customized by filling out checkout prompt notes. For fully custom designs on pottery or woodwork, please email us directly through the contact page form.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section class="contact-section reveal-on-scroll" id="contact">
+    <div class="container">
+      <span class="section-tag">Get in Touch</span>
+      <h2>Connect with Our Workshop</h2>
+      
+      <div class="contact-grid">
+        <!-- Contact details and info panel -->
+        <div class="contact-info-panel">
+          <h3 class="contact-info-title">Let's craft something beautiful together.</h3>
+          <p class="contact-info-desc">Have a question regarding custom orders, shipping times, or details about our artisan collectives? Drop us a line using the form or reach out through our official direct channels below.</p>
+          
+          <div class="contact-methods">
+            <!-- Email -->
+            <div class="contact-method-card">
+              <div class="method-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <div class="method-details">
+                <h4>Email Address</h4>
+                <p>support@handmadecrafts.com</p>
+              </div>
+            </div>
+            <!-- Phone -->
+            <div class="contact-method-card">
+              <div class="method-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+              <div class="method-details">
+                <h4>Phone Number</h4>
+                <p>+1 (555) 349-2910</p>
+              </div>
+            </div>
+            <!-- Location -->
+            <div class="contact-method-card">
+              <div class="method-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div class="method-details">
+                <h4>Store Location</h4>
+                <p>789 Clay & Sage Lane, Florence, Italy</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Contact Form Card with JS validation -->
+        <div class="contact-form-card">
+          <form id="contact-form" novalidate>
+            <div class="form-feedback" id="contact-feedback"></div>
+            
+            <div class="form-group">
+              <label for="contact-name">Full Name *</label>
+              <input type="text" id="contact-name" class="form-input" placeholder="Your name" required minlength="2">
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email Address *</label>
+              <input type="email" id="contact-email" class="form-input" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-phone">Phone Number (Optional)</label>
+              <input type="tel" id="contact-phone" class="form-input" placeholder="+1 (555) 000-0000">
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Message *</label>
+              <textarea id="contact-message" class="form-input" placeholder="Detail your question or custom request here..." required minlength="10"></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-submit">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Column A: Brand Info & Socials -->
+        <div class="footer-column footer-about">
+          <div class="footer-brand">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-color);"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            Van<span>Craft</span>
+          </div>
+          <p>Celebrating traditional Indian handmade craftsmanship. We connect independent local artisans directly to collectors around the world.</p>
+          
+          <!-- Social Icons (Fully functional links) -->
+          <div class="footer-socials">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+            </a>
+            <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Pinterest">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 22a8.62 8.62 0 0 1-1.65-4.5c0-3.07 1.84-5.83 4.22-7.1a5.61 5.61 0 0 1 2.82-.6c2.72.07 5.16 1.94 5.92 4.56.8 2.76-.32 6.06-2.88 7.37a3.83 3.83 0 0 1-3.66.16c-1.32-.67-1.89-2.22-1.42-3.61.42-1.22 1.63-2.52 2.92-2.92a2.38 2.38 0 0 1 2.68.86l.66-2.53A10.38 10.38 0 0 0 12 3a9 9 0 0 0-9 9c0 3.22 1.7 6.13 4.36 7.78z"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Column B: Quick Links -->
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#shop">Shop</a></li>
+            <li><a href="#categories-anchor">Categories</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Column C: Contact Details -->
+        <div class="footer-column">
+          <h3>Contact Details</h3>
+          <div class="footer-contact-info">
+            <div class="footer-contact-row">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              <span>support@vancraft.com</span>
+            </div>
+            <div class="footer-contact-row">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <span>+91 98765 43210</span>
+            </div>
+            <div class="footer-contact-row">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>102 Craft Artisan Lane, Jaipur, Rajasthan, India</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column D: Newsletter -->
+        <div class="footer-column">
+          <h3>Stay Updated with VanCraft</h3>
+          <p class="newsletter-desc">Subscribe to gather alerts on new artisan partnerships and limited seasonal drops.</p>
+          <div class="newsletter-form-container">
+            <form id="newsletter-form">
+              <div class="newsletter-input-group">
+                <input type="email" placeholder="your@email.com" class="newsletter-input" id="newsletter-email" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+              </div>
+              <div class="newsletter-feedback" id="newsletter-feedback"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom Copyright & Links -->
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 VanCraft | Handmade with Love. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Shopping Cart Side Drawer panel -->
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-header">
+      <h2 class="cart-drawer-title">Shopping Cart</h2>
+      <button class="close-cart-btn" id="cart-close" aria-label="Close cart drawer">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Items Listing dynamic wrapper -->
+    <div class="cart-items-container" id="cart-items-container">
+      <!-- Populated via JS -->
+    </div>
+
+    <!-- Cart totals details and promo options -->
+    <div class="cart-drawer-footer">
+      <div class="promo-container">
+        <input type="text" placeholder="Promo code (e.g. HANDMADE10)" class="promo-input" id="promo-input">
+        <button class="promo-btn" id="promo-btn">Apply</button>
+      </div>
+      <div class="promo-feedback" id="promo-feedback"></div>
+
+      <div class="cart-totals">
+        <div class="totals-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">₹0.00</span>
+        </div>
+        <div class="totals-row discount" id="cart-discount-row" style="display: none;">
+          <span>Discount</span>
+          <span id="cart-discount">-₹0.00</span>
+        </div>
+        <div class="totals-row">
+          <span>Shipping</span>
+          <span id="cart-shipping" style="color:var(--success-color); font-weight:700;">Free</span>
+        </div>
+        <div class="totals-row grand-total">
+          <span>Total</span>
+          <span id="cart-total">₹0.00</span>
+        </div>
+      </div>
+      <button class="btn btn-primary checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- Product Detail Modal Overlay (Quick View) -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="product-modal-card">
+      <button class="modal-close-btn" id="product-modal-close" aria-label="Close modal details">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <!-- Left pane: product photo -->
+      <div class="modal-image-pane">
+        <img id="modal-product-image" src="" alt="" ondragstart="return false;">
+        <div class="image-watermark-overlay">Watermarked Media</div>
+      </div>
+
+      <!-- Right pane: details description tabs and CTA -->
+      <div class="modal-info-pane">
+        <div>
+          <div class="modal-category" id="modal-product-category">Ceramics</div>
+          <h2 class="modal-title" id="modal-product-name">Product Name</h2>
+          
+          <div class="modal-artisan" id="modal-product-artisan">
+            <!-- Artisan details -->
+          </div>
+
+          <p class="modal-description" id="modal-product-description">
+            Product description details.
+          </p>
+
+          <!-- Navigation Specification tabs -->
+          <div class="modal-tabs">
+            <div class="tab-btn active" data-tab="tab-specs">Details & Size</div>
+            <div class="tab-btn" data-tab="tab-artisan">About the Artisan</div>
+          </div>
+
+          <!-- Specs tab content -->
+          <div class="tab-content active" id="tab-specs">
+            <p id="modal-specs-dimensions"></p>
+            <p id="modal-specs-materials" style="margin-top: 8px;"></p>
+            <p id="modal-specs-care" style="margin-top: 8px;"></p>
+          </div>
+
+          <!-- Artisan bio content -->
+          <div class="tab-content" id="tab-artisan">
+            <div id="modal-artisan-bio"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="modal-price-label">
+            <span>Price</span>
+            <div class="modal-price" id="modal-product-price">₹0.00</div>
+          </div>
+
+          <div class="modal-actions">
+            <!-- Quantity picker selector -->
+            <div class="quantity-picker">
+              <button class="qty-btn" id="modal-qty-dec">-</button>
+              <div class="qty-val" id="modal-qty-val">1</div>
+              <button class="qty-btn" id="modal-qty-inc">+</button>
+            </div>
+            <button class="btn btn-primary modal-add-to-cart" id="modal-add-btn">Add To Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Secure Checkout Modal Overlay -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="checkout-modal-card">
+      <button class="modal-close-btn" id="checkout-modal-close" aria-label="Close checkout modal">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <h2 class="checkout-title">Secure Checkout</h2>
+      
+      <form class="checkout-form" id="checkout-form">
+        <div class="form-group">
+          <label for="checkout-name">Full Name *</label>
+          <input type="text" id="checkout-name" class="form-input" required placeholder="Elena Rostova">
+        </div>
+        <div class="form-group">
+          <label for="checkout-email">Email Address *</label>
+          <input type="email" id="checkout-email" class="form-input" required placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label for="checkout-address">Shipping Address *</label>
+          <input type="text" id="checkout-address" class="form-input" required placeholder="789 Clay & Sage Lane">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="checkout-city">City *</label>
+            <input type="text" id="checkout-city" class="form-input" required placeholder="Florence">
+          </div>
+          <div class="form-group">
+            <label for="checkout-zip">Zip Code *</label>
+            <input type="text" id="checkout-zip" class="form-input" required placeholder="50123">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="checkout-card">Card Details (Simulated checkout) *</label>
+          <input type="text" id="checkout-card" class="form-input" required pattern="\d{16}" placeholder="4111 2222 3333 4444" title="16-digit credit card number">
+        </div>
+        
+        <button type="submit" class="btn btn-primary place-order-btn" style="margin-top:12px; width:100%; justify-content:center;">
+          Place Secure Order (<span id="checkout-total-btn">₹0.00</span>)
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success Notification Modal Overlay -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="success-card">
+      <div class="success-icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h2 class="success-title">Order Confirmed!</h2>
+      <p class="success-msg">Thank you for supporting global independent artisans. We've emailed a receipt and tracking summary to verify details of your handmade shipment.</p>
+      <button class="btn btn-primary" id="success-close-btn" style="width:100%; justify-content:center;">Continue Shopping</button>
+    </div>
+  </div>
+
+  <!-- Login Modal Overlay -->
+  <div class="modal-overlay" id="login-modal">
+    <div class="auth-modal-card">
+      <button class="modal-close-btn" id="login-modal-close" aria-label="Close login modal">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="auth-header">
+        <h2 class="auth-title">Welcome Back</h2>
+        <p class="auth-subtitle">Login to your VanCraft account</p>
+      </div>
+      <form class="auth-form" id="login-form" novalidate>
+        <div class="form-feedback" id="login-feedback" style="font-size:12px; margin-bottom:10px; font-weight:600;"></div>
+        <div class="form-group" style="margin-bottom: 12px; text-align:left;">
+          <label for="login-email" style="display:block; font-size:12px; font-weight:600; margin-bottom:6px;">Email Address *</label>
+          <input type="email" id="login-email" class="form-input" required placeholder="name@example.com" style="width:100%; border: 1px solid var(--border-color); padding: 10px 16px; border-radius: var(--radius-md); background: var(--bg-secondary); color: var(--text-primary);">
+        </div>
+        <div class="form-group" style="margin-bottom: 12px; text-align:left;">
+          <label for="login-password" style="display:block; font-size:12px; font-weight:600; margin-bottom:6px;">Password *</label>
+          <input type="password" id="login-password" class="form-input" required placeholder="Enter password" style="width:100%; border: 1px solid var(--border-color); padding: 10px 16px; border-radius: var(--radius-md); background: var(--bg-secondary); color: var(--text-primary);">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:12px;">Login</button>
+      </form>
+      <p class="auth-switch-text">Don't have an account? <span class="auth-switch-link" id="switch-to-signup">Sign Up</span></p>
+    </div>
+  </div>
+
+  <!-- Signup Modal Overlay -->
+  <div class="modal-overlay" id="signup-modal">
+    <div class="auth-modal-card">
+      <button class="modal-close-btn" id="signup-modal-close" aria-label="Close signup modal">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="auth-header">
+        <h2 class="auth-title">Create Account</h2>
+        <p class="auth-subtitle">Join the VanCraft artisan community</p>
+      </div>
+      <form class="auth-form" id="signup-form" novalidate>
+        <div class="form-feedback" id="signup-feedback" style="font-size:12px; margin-bottom:10px; font-weight:600;"></div>
+        <div class="form-group" style="margin-bottom: 12px; text-align:left;">
+          <label for="signup-name" style="display:block; font-size:12px; font-weight:600; margin-bottom:6px;">Full Name *</label>
+          <input type="text" id="signup-name" class="form-input" required placeholder="Your name" style="width:100%; border: 1px solid var(--border-color); padding: 10px 16px; border-radius: var(--radius-md); background: var(--bg-secondary); color: var(--text-primary);">
+        </div>
+        <div class="form-group" style="margin-bottom: 12px; text-align:left;">
+          <label for="signup-email" style="display:block; font-size:12px; font-weight:600; margin-bottom:6px;">Email Address *</label>
+          <input type="email" id="signup-email" class="form-input" required placeholder="name@example.com" style="width:100%; border: 1px solid var(--border-color); padding: 10px 16px; border-radius: var(--radius-md); background: var(--bg-secondary); color: var(--text-primary);">
+        </div>
+        <div class="form-group" style="margin-bottom: 12px; text-align:left;">
+          <label for="signup-password" style="display:block; font-size:12px; font-weight:600; margin-bottom:6px;">Password *</label>
+          <input type="password" id="signup-password" class="form-input" required placeholder="Create password" style="width:100%; border: 1px solid var(--border-color); padding: 10px 16px; border-radius: var(--radius-md); background: var(--bg-secondary); color: var(--text-primary);">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:12px;">Sign Up</button>
+      </form>
+      <p class="auth-switch-text">Already have an account? <span class="auth-switch-link" id="switch-to-login">Login</span></p>
+    </div>
+  </div>
+
+  <!-- Back to top floating button -->
+  <button class="back-to-top" id="back-to-top" aria-label="Scroll back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- Core Javascript scripts -->
+  <script src="script.js?v=2.5"></script>
+</body>
+</html>
